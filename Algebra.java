@@ -34,7 +34,7 @@ public class Algebra {
 	public static int plus(int x1, int x2) {
 		int sum = x1;
 		if (is_negative(x2)){
-			for(int i = 0; i < x2; i++) {
+			for(int i = 0; i < -x2; i++) {
 				sum --;
 			}	
 		}
@@ -50,7 +50,7 @@ public class Algebra {
 	public static int minus(int x1, int x2) {
 		int sum = x1;
 		if (is_negative(x2)){
-			for(int i = 0; i < x2; i++){
+			for(int i = 0; i < -x2; i++){
 				sum ++;
 			}
 		}
@@ -65,14 +65,15 @@ public class Algebra {
 	// Returns x1 * x2
 	public static int times(int x1, int x2) {
 		int sum = 0;
-		boolean isNegative = is_negative(x2);
-		for (int i = 0; i < x2; i++){
-			if (isNegative){
+		if (is_negative(x2)){
+			for (int i = 0; i < -x2; i++){
 				sum = minus(sum, x1);
-			}
-			else{
+		}
+		}
+		else{
+			for (int i = 0; i < x2; i++){
 				sum = plus(sum, x1);
-			}
+		}
 		}
 		return sum;
 	}
