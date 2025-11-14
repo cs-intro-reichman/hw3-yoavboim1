@@ -79,6 +79,9 @@ public class Algebra {
 
 	// Returns x^n (for n >= 0)
 	public static int pow(int x, int n) {
+		if (n == 0){
+			return 1;
+		}
 		int sum = x;
 		for(int i = 0; i < n-1; i++){
 			sum = times(sum, x);
