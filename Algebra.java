@@ -98,8 +98,6 @@ public class Algebra {
 
 	// Returns the integer part of x1 / x2 
 	public static int div(int x1, int x2) {
-		int res = 0;
-		int total = x1;
 		int sign = 1;
 		// make x1, x2 positive, but remeber the sign for the result
 		if (is_negative(x1)){
@@ -108,8 +106,10 @@ public class Algebra {
 		}
 		if (is_negative(x2)){
 			sign = change_sign(sign);
-			x1 = change_sign(x2);
+			x2 = change_sign(x2);
 		}
+		int res = 0;
+		int total = x1;
 
 		for (int i = 0; i < x1; i++){
 			total = minus(total, x2);
@@ -117,10 +117,10 @@ public class Algebra {
 				res ++;
 			}
 			else {
-				return pow(res, sign);
+				return times(res, sign);
 			}
 		}
-		return pow(res, sign);
+		return times(res, sign);
 	}
 
 	// Returns x1 % x2
