@@ -21,13 +21,27 @@ public class Algebra {
    		System.out.println(sqrt(36));
 		System.out.println(sqrt(263169));
    		System.out.println(sqrt(76123));
-	}  
+	}
+
+	public static boolean is_negative(int x) {
+		if (x < 0) {
+			return true;
+		}
+		return false;
+	}
 
 	// Returns x1 + x2
 	public static int plus(int x1, int x2) {
 		int sum = x1;
-		for(int i = 0; i < x2; i++) {
-			sum ++;
+		if (is_negative(x2)){
+			for(int i = 0; i < x2; i++) {
+				sum --;
+			}	
+		}
+		else{
+			for(int i = 0; i < x2; i++) {
+				sum ++;
+			}
 		}
 		return sum;
 	}
@@ -35,8 +49,15 @@ public class Algebra {
 	// Returns x1 - x2
 	public static int minus(int x1, int x2) {
 		int sum = x1;
-		for(int i = 0; i < x2; i++){
-			sum --;
+		if (is_negative(x2)){
+			for(int i = 0; i < x2; i++){
+				sum ++;
+			}
+		}
+		else{
+			for(int i = 0; i < x2; i++){
+				sum --;
+			}
 		}
 		return sum;
 	}
@@ -44,8 +65,14 @@ public class Algebra {
 	// Returns x1 * x2
 	public static int times(int x1, int x2) {
 		int sum = 0;
+		boolean isNegative = is_negative(x2);
 		for (int i = 0; i < x2; i++){
-			sum = plus(sum, x1);
+			if (isNegative){
+				sum = minus(sum, x1);
+			}
+			else{
+				sum = plus(sum, x1);
+			}
 		}
 		return sum;
 	}
