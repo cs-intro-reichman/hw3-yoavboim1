@@ -78,14 +78,20 @@ public class Algebra {
 		return sum;
 	}
 
+	public static int change_sign(int x) {
+		return minus(x, times(x,2));
+	}
+
 	// Returns x^n (for n >= 0)
 	public static int pow(int x, int n) {
 		if (n == 0){
 			return 1;
 		}
 		int sum = x;
-		for(int i = 0; i < n-1; i++){
-			sum = times(sum, x);
+		for(int i = 0; i < n; i++){
+			if (i != 0){
+				sum = times(sum, x);
+			}
 		}
 		return sum;
 	}
@@ -97,12 +103,12 @@ public class Algebra {
 		int sign = 1;
 		// make x1, x2 positive, but remeber the sign for the result
 		if (is_negative(x1)){
-			sign = pow(sign, -1);
-			x1 = -x1;
+			sign = change_sign(sign);
+			x1 = change_sign(x1);
 		}
 		if (is_negative(x2)){
-			sign = pow(sign, -1);
-			x2 = -x2;
+			sign = change_sign(sign);
+			x1 = change_sign(x2);
 		}
 
 		for (int i = 0; i < x1; i++){
