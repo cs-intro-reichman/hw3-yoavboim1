@@ -132,9 +132,28 @@ public class Algebra {
 		return x1;
 	}
 
-
 	// Returns the integer part of sqrt(x) 
 	public static int sqrt(int x) {
-		return pow(x, 2);
-	}	  	  
-}
+
+		if (x == 0) {
+			return 0;
+		}
+
+		// Initial guess g = x
+		int g = x;
+
+		// Perform ~20 Newton iterations
+		for (int i = 0; i < 20; i++) {
+
+			// term1 = x / g
+			int term1 = div(x, g);
+
+			// sum = g + term1
+			int sum = plus(g, term1);
+
+			// g = (g + x/g) / 2
+			g = div(sum, 2);
+		}
+
+		return g;
+	}}
