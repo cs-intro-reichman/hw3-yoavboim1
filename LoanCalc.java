@@ -29,7 +29,16 @@ public class LoanCalc {
 	// interest rate (as a percentage), the number of periods (n), and the periodical payment.
 	private static double endBalance(double loan, double rate, int n, double payment) {	
 		// Replace the following statement with your code
-		return 0;
+		double balance = (double) loan;
+		//(100,000 – 10,000) * 1.05 = 94,500.
+		for (int i = 0; i < n; i++){
+			balance -= payment;
+			double rateInRatio = (double) rate / 100;
+			balance *= (1 + rateInRatio);
+			// int years = i + 1;
+			// System.out.println("after " + years + " years:" + Math.round(balance));
+		}
+		return balance;
 	}
 	
 	// Uses sequential search to compute an approximation of the periodical payment
@@ -38,8 +47,14 @@ public class LoanCalc {
 	// the number of periods (n), and epsilon, the approximation's accuracy
 	// Side effect: modifies the class variable iterationCounter.
     public static double bruteForceSolver(double loan, double rate, int n, double epsilon) {
-		// Replace the following statement with your code
-		return 0;
+		iterationCounter = 0; 
+        double g = loan / n;
+
+        while (endBalance(loan, rate, n, g) > 0) {
+            g += epsilon; 
+            iterationCounter++;
+        }
+        return g;
     }
     
     // Uses bisection search to compute an approximation of the periodical payment 
@@ -48,7 +63,20 @@ public class LoanCalc {
 	// the number of periods (n), and epsilon, the approximation's accuracy
 	// Side effect: modifies the class variable iterationCounter.
     public static double bisectionSolver(double loan, double rate, int n, double epsilon) {  
-        // Replace the following statement with your code
-		return 0;
+        iterationCounter = 0;
+		double H = loan;
+		double L = loan / n;
+        double g = (L + H) / 2; 
+
+        while ((H - L) > epsilon) {
+			if (endBalance(loan, rate, n, g) > 0) {
+                L = g; 
+            } else {
+                H = g;
+            }
+            g = (L + H) / 2;
+            iterationCounter++;
+        }
+        return g;
     }
 }
