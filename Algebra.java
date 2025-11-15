@@ -21,47 +21,139 @@ public class Algebra {
    		System.out.println(sqrt(36));
 		System.out.println(sqrt(263169));
    		System.out.println(sqrt(76123));
-	}  
+	}
+
+	public static boolean is_negative(int x) {
+		if (x < 0) {
+			return true;
+		}
+		return false;
+	}
 
 	// Returns x1 + x2
 	public static int plus(int x1, int x2) {
-		// Replace the following statement with your code
-		return 0;
+		int sum = x1;
+		if (is_negative(x2)){
+			for(int i = 0; i < -x2; i++) {
+				sum --;
+			}	
+		}
+		else{
+			for(int i = 0; i < x2; i++) {
+				sum ++;
+			}
+		}
+		return sum;
 	}
 
 	// Returns x1 - x2
 	public static int minus(int x1, int x2) {
-		// Replace the following statement with your code
-		return 0;
+		int sum = x1;
+		if (is_negative(x2)){
+			for(int i = 0; i < -x2; i++){
+				sum ++;
+			}
+		}
+		else{
+			for(int i = 0; i < x2; i++){
+				sum --;
+			}
+		}
+		return sum;
 	}
 
 	// Returns x1 * x2
 	public static int times(int x1, int x2) {
-		// Replace the following statement with your code
-		return 0;
+		int sum = 0;
+		if (is_negative(x2)){
+			for (int i = 0; i < -x2; i++){
+				sum = minus(sum, x1);
+		}
+		}
+		else{
+			for (int i = 0; i < x2; i++){
+				sum = plus(sum, x1);
+		}
+		}
+		return sum;
+	}
+
+	public static int change_sign(int x) {
+		return minus(x, times(x,2));
 	}
 
 	// Returns x^n (for n >= 0)
 	public static int pow(int x, int n) {
-		// Replace the following statement with your code
-		return 0;
+		if (n == 0){
+			return 1;
+		}
+		int sum = x;
+		for(int i = 0; i < n; i++){
+			if (i != 0){
+				sum = times(sum, x);
+			}
+		}
+		return sum;
 	}
 
 	// Returns the integer part of x1 / x2 
 	public static int div(int x1, int x2) {
-		// Replace the following statement with your code
-		return 0;
+		int sign = 1;
+		// make x1, x2 positive, but remeber the sign for the result
+		if (is_negative(x1)){
+			sign = change_sign(sign);
+			x1 = change_sign(x1);
+		}
+		if (is_negative(x2)){
+			sign = change_sign(sign);
+			x2 = change_sign(x2);
+		}
+		int res = 0;
+		int total = x1;
+
+		for (int i = 0; i < x1; i++){
+			total = minus(total, x2);
+			if (total >= 0){
+				res ++;
+			}
+			else {
+				return times(res, sign);
+			}
+		}
+		return times(res, sign);
 	}
 
 	// Returns x1 % x2
 	public static int mod(int x1, int x2) {
-		// Replace the following statement with your code
-		return 0;
-	}	
+		int divResult = div(x1, x2);
+		for (int i = 0; i < divResult; i++){
+			x1 = minus(x1, x2);
+		}
+		return x1;
+	}
 
 	// Returns the integer part of sqrt(x) 
 	public static int sqrt(int x) {
-		// Replace the following statement with your code
-		return 0;
-	}	  	  
-}
+
+		if (x == 0) {
+			return 0;
+		}
+
+		// Initial guess g = x
+		int g = x;
+
+		// Perform ~20 Newton iterations
+		for (int i = 0; i < 20; i++) {
+
+			// term1 = x / g
+			int term1 = div(x, g);
+
+			// sum = g + term1
+			int sum = plus(g, term1);
+
+			// g = (g + x/g) / 2
+			g = div(sum, 2);
+		}
+
+		return g;
+	}}

@@ -1,3 +1,5 @@
+import java.nio.file.FileAlreadyExistsException;
+
 /** Functions for checking if a given string is an anagram. */
 public class Anagram {
 	public static void main(String args[]) {
@@ -28,7 +30,29 @@ public class Anagram {
 
 	// Returns true if the two given strings are anagrams, false otherwise.
 	public static boolean isAnagram(String str1, String str2) {
-		// Replace the following statement with your code
+		str1 = preProcess(str1);
+		str2 = preProcess(str2);
+		for (int i = 0; i < str1.length(); i++){
+
+			char c = str1.charAt(i);
+			boolean charIsInStr2 = false;
+
+			for (int j = 0; j < str2.length(); j++){
+				char c2 = str2.charAt(j);
+				if (c == c2){
+					charIsInStr2 = true;
+					str2 = str2.substring(0, j) + str2.substring(j + 1);
+					break; // if c is in c2, go to next c of str1...
+				}	
+			}
+			if (charIsInStr2 == false){
+				return false;
+			}
+		}
+
+		if (str2.isEmpty()){
+			return true;
+		}
 		return false;
 	}
 	   
@@ -36,14 +60,31 @@ public class Anagram {
 	// to lower-case, and all the other characters are deleted, except for spaces, which are left
 	// as is. For example, the string "What? No way!" becomes "whatnoway"
 	public static String preProcess(String str) {
-		// Replace the following statement with your code
-		return "";
-	} 
+		String result = "";
+
+		for (int i = 0; i < str.length(); i++) {
+			char c = str.charAt(i);
+
+			if (Character.isLetter(c)) {
+				result += Character.toLowerCase(c);
+			}
+		}
+
+		return result;
+	}
 	   
 	// Returns a random anagram of the given string. The random anagram consists of the same
 	// characters as the given string, re-arranged in a random order. 
 	public static String randomAnagram(String str) {
-		// Replace the following statement with your code
-		return "";
+        String shuffled = "";
+        String remaining = str;
+
+        for (int i = str.length(); i > 0; i--) {
+            int index = (int)(Math.random() * remaining.length());
+            char c = remaining.charAt(index);
+            shuffled += c;
+            remaining = remaining.substring(0, index) + remaining.substring(index + 1);
+        }
+		return shuffled;
 	}
 }
